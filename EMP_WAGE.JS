@@ -1,5 +1,4 @@
 
-//UC4
 
 const IS_PART_TIME = 1;
 const IS_FULL_TIME = 2;
@@ -11,22 +10,28 @@ const TOTAL_WORKING_HRS = 100;
 
 function getWorkingHours(empCheck) {
     switch (empCheck) {
-        case IS_FULL_TIME:
-            return FULL_TIME_HRS;
+        case IS_FULL_TIME: return FULL_TIME_HRS;
             break;
-        case IS_PART_TIME:
-            return PART_TIME_HRS;
+        case IS_PART_TIME: return PART_TIME_HRS;
             break;
-        default:
-            return 0;
+        default: return 0;
     }
 }
+
+function calculateDailyWage(empHrs) {
+    return empHrs * WAGE_PER_HR;
+}
+
 let totalEmpHrs = 0;
 let totalWorkingDays = 0;
-// UC5: Calculating wages till a condition of 100 hours or 20 days is reached.
+let empDailyWageArray = new Array();
+
 while (totalEmpHrs <= TOTAL_WORKING_HRS && totalWorkingDays < NUM_OF_WORKING_DAYS) {
     totalWorkingDays++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
-    totalEmpHrs += getWorkingHours(empCheck);
-    let empWage = totalEmpHrs * WAGE_PER_HR;
-    console.log("Total Days: " + totalWorkingDays + " Total Hours: " + totalEmpHrs + " Total Wage: " + empWage);
+    let empHrs = getWorkingHours(empCheck);
+    totalEmpHrs += empHrs;
+    empDailyWageArray.push(calculateDailyWage(empHrs));
+}
+let empWage = calculateDailyWage(totalEmpHrs);
+console.log("Total Days: " + totalWorkingDays + " Total Hours: " + totalEmpHrs + " Total Wage: " + empWage);
